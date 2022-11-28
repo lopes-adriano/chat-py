@@ -18,14 +18,14 @@ class Envio(threading.Thread):
             print(f'{self.nome}: ', end='')
             sys.stdout.flush()
             mensagem = sys.stdin.readline()[:-1]
-
+        
             #sair do chat
             if mensagem == 'QUIT':
-                self.sc.sendall(f'{self.name} saiu do chat'.encode('UTF-8'))
+                self.sc.sendall(f'{self.nome} saiu do chat'.encode('UTF-8'))
                 break
 
             else:
-                self.sc.sendall(f'{self.name}: {mensagem}'.encode('UTF-8'))
+                self.sc.sendall(f'{self.nome}: {mensagem}'.encode('UTF-8'))
 
         print('\nSaindo do chat...')
         self.sc.close()
@@ -105,7 +105,6 @@ class Cliente:
 
         mensagem = textInput.get()
         textInput.delete(0, tk.END)
-        
         if mensagem:
             if self.mensagens:
                 self.mensagens.insert(tk.END, f'{self.nome}: {mensagem}')
