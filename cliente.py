@@ -46,21 +46,28 @@ class Inbox(threading.Thread):
         while True:
 
             mensagem = self.sc.recv(1024).decode('UTF-8')
-
-            if mensagem:
-                if self.mensagens:
-                    self.mensagens.insert(tk.END, mensagem)
-                    print('hi')
-                    print(f'\r{mensagem}\n{self.nome}: ', end='')
+            
+            try:
+                if mensagem:
+                    if self.mensagens:
+                        self.mensagens.insert(tk.END, mensagem)
+                        print('hi')
+                        print(f'\r{mensagem}\n{self.nome}: ', end='')
+                    
+                    else:
+                        print(f'\r{mensagem}\n{self.nome}: ', end='')
                 
                 else:
-                    print(f'\r{mensagem}\n{self.nome}: ', end='')
-            
-            else:
+                    print('\nConexão perdida com o servidor :(')
+                    print('\nSaindo...')
+                    self.sc.close()
+                    os._exit(0)
+            except:
                 print('\nConexão perdida com o servidor :(')
                 print('\nSaindo...')
                 self.sc.close()
                 os._exit(0)
+
 
 class Cliente:
     
